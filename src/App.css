@@ -1,0 +1,59 @@
+.App {
+  text-align: left;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rTable {
+  display: block;
+  width: 100%;
+}
+.rTableHeading, .rTableBody, .rTableFoot, .rTableRow{
+  clear: both;
+}
+.rTableHead, .rTableFoot{
+  background-color: #DDD;
+  font-weight: bold;
+  
+}
+.rTableCell, .rTableHead {
+  border: 1px solid #999999;
+  float: left;
+  height: 30px;
+  overflow: hidden;
+  padding-top: 1%;
+  padding-left: 2px;
+  width: 12%;
+  font-size: 0.9em;
+}
+.rTable:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}

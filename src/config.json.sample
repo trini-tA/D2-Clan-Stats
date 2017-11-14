@@ -1,0 +1,13 @@
+{
+    
+
+    "bungieUrl": "https://www.bungie.net/Platform/",
+
+    "bungieGrpV2": "GroupV2/_clan_id_",
+    "bungieGrpV2Members": "Destiny2/_clan_id_/Members/?currentPage=_current_page_",
+    "bungiePlayerInfo": "_membershipType_/Profile/_membershipId_/?components=100,1",
+    "bungiePlayerStat": "Destiny2/_membershipType_/Account/_membershipId_/Stats",
+    
+    "X_API_Key": "YOUR KEY HERE"
+}
+
