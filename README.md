@@ -1,3 +1,9 @@
+#D2-Clan-Stats
+
+See stats of all players in clan.
+For testing rename config.json.sample to config.json and add X_API_Key.
+
+
 //const request = 'https://www.bungie.net/Platform/GroupV2/' + clan_id;    
 //const request = 'https://www.bungie.net/Platform/GroupV2/' + clan_id + '/Members/?currentPage=' + pageNumber;
 //const request = 'https://www.bungie.net/Platform/Destiny2/' + membershipType + '/Profile/' + membershipId + '/?components=100,1';
