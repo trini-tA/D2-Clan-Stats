@@ -12,7 +12,7 @@ class App extends Component {
           <h1 className="App-title">Welcome LTP3</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          Dev in progress :)
         </p>
         
         <GetListPlayers clanId="238226"/>

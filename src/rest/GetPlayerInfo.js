@@ -1,18 +1,19 @@
 //getPlayerInfo.js
 import React, { Component } from 'react';
 import Immutable from 'immutable';
-import GetLastConnect from './GetLastConnect';
 import config from '../config.json'; //config.X_API_Key
 
 class GetPlayerInfo extends Component {
     
   constructor (props) { 
     super(props); 
+
     this.state = {
       stats_get: false,
-      stats_merged: {},
-      stats_PVE: {},
-      stats_PVP: {},
+      pvp_efficiency: -1,
+      pve_efficiency: -1,
+      pvp_totalActivityDurationSeconds: -1,
+      pve_totalActivityDurationSeconds: -1,
     };
 
     this._getPlayerStat = this._getPlayerStat.bind( this );
@@ -21,7 +22,7 @@ class GetPlayerInfo extends Component {
  
 
   componentWillMount (){
-
+    // <GetPlayerInfo membershipId={item.get('membershipId')} membershipType={item.get('membershipType')} />
     this._getPlayerStat( this.props.membershipId, this.props.membershipType );
     
   }
@@ -44,15 +45,50 @@ class GetPlayerInfo extends Component {
       .then((responseJson) => {
         
         const parseResponse = Immutable.fromJS( responseJson );
-        const allTime = parseResponse.get('Response').get('mergedAllCharacters').get('merged').get('allTime');
-      
+        
+
         if ( responseJson.ErrorCode === 1 ){
 
+          const results = parseResponse.get('Response').get('mergedAllCharacters').get('results');
+          const pvp = results.get('allPvP').get('allTime');
+          const pve = results.get('allPvE').get('allTime');
+
+          let pvp_efficiency = -1;
+          if ( pvp.get('killsDeathsRatio' ) != undefined ){
+            pvp_efficiency = pvp.get('killsDeathsRatio' ).get('basic').get('displayValue');
+          }
+
+          let pvp_totalActivityDurationSeconds = -1;
+          if ( pvp.get('totalActivityDurationSeconds' ) != undefined ){
+            pvp_totalActivityDurationSeconds = pvp.get('totalActivityDurationSeconds' ).get('basic').get('displayValue');
+          }
+
+          let pve_efficiency = -1;
+          if ( pve.get('efficiency') != undefined ){
+            pve_efficiency = pve.get('efficiency' ).get('basic').get('displayValue');
+          }
+          
+          let pve_totalActivityDurationSeconds = -1;
+          if ( pve.get('totalActivityDurationSeconds' ) != undefined ){
+            pve_totalActivityDurationSeconds = pve.get('totalActivityDurationSeconds' ).get('basic').get('displayValue');
+          }
+
           this.setState({ 
-            stats_merged: allTime,
+            pvp_efficiency: pvp_efficiency,
+            pvp_totalActivityDurationSeconds: pvp_totalActivityDurationSeconds,
+            
+            pve_efficiency: pve_efficiency,
+            pve_totalActivityDurationSeconds: pve_totalActivityDurationSeconds,
+
             stats_get: true 
           });
-          
+          /**"efficiency": {
+							"statId": "efficiency",
+							"basic": {
+								"value": 10.469309462915602,
+								"displayValue": "10.47"
+							}
+						}, */
         } else {
           console.log( 'error no stat for player !' );
         }
@@ -73,18 +109,16 @@ class GetPlayerInfo extends Component {
 
   render () {
 
-    const { stats_merged, stats_get, stats_PVE, stats_PVP } = this.state;
+    const { stats_get, pvp_efficiency, pve_efficiency, pvp_totalActivityDurationSeconds, pve_totalActivityDurationSeconds } = this.state;
     
-    
-    if ( !stats_get ){
-      this._getPlayerStat( membershipId, membershipType );
-    }
-    
+   
     return (
-      <div>
-       
-        
-      </div>
+      <span>
+        <div className="rTableCell">{ stats_get && pve_totalActivityDurationSeconds}</div>
+        <div className="rTableCell">{ stats_get && pve_efficiency}</div>
+        <div className="rTableCell">{ stats_get && pvp_totalActivityDurationSeconds}</div>
+        <div className="rTableCell">{ stats_get && pvp_efficiency}</div>
+      </span>
     );
 
 

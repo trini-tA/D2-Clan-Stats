@@ -1,6 +1,5 @@
 //GetLastConnect.js
 import React, { Component } from 'react';
-import Immutable from 'immutable';
 import config from '../config.json'; //config.X_API_Key
 
 //<GetLastConnect membershipId={item.get('membershipId')} membershipType={item.get('membershipType')}/>
@@ -79,7 +78,7 @@ class GetLastConnect extends Component {
   
   render () {
 
-    const { lastPlayDate_get, lastPlayDate } = this.state;
+    const { lastPlayDate } = this.state;
     
     
     return (

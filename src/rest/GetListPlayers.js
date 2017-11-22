@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Immutable from 'immutable';
 import GetLastConnect from './GetLastConnect';
+import GetPlayerInfo from './GetPlayerInfo';
 import '../App.css';
 import config from '../config.json'; //config.X_API_Key
 
@@ -55,7 +56,7 @@ class GetListPlayers extends Component {
           let parsePlayers = {};
           responseJson.Response.results.map( (item, index) => {
             //console.log( 'parse list of player', item.destinyUserInfo );
-            
+            //if ( index < 2 ) {
             parsePlayers[index] = {
               isOnline: item.isOnline,
               membershipId: item.destinyUserInfo.membershipId,
@@ -63,10 +64,11 @@ class GetListPlayers extends Component {
               displayName: item.destinyUserInfo.displayName,
               lastPlayed: null,
             };
+            
             this.setState({
               parsePlayers: Immutable.fromJS( parsePlayers ),
             });
-
+            //}
             
           });
           /*
@@ -101,25 +103,6 @@ class GetListPlayers extends Component {
 
     const { getListOfMembers, parsePlayers } = this.state;
               
-    /**
-     *<div class="rTable">
-<div class="rTableRow">
-<div class="rTableHead"><strong>Name</strong></div>
-<div class="rTableHead"><span style="font-weight: bold;">Telephone</span></div>
-<div class="rTableHead">&nbsp;</div>
-</div>
-<div class="rTableRow">
-<div class="rTableCell">John</div>
-     */
-    
-    /**
-      *   <div style={styles.rowStat} key={index} id={index}>
-              <span style={styles.rowLineHidden}>IndexPlayer: {index}</span> &nbsp;
-             
-              {this._renderParsePlayer( item )}
-            </div>
-          
-      */
     return (
       <div>
         <div className="rTable">
@@ -129,7 +112,7 @@ class GetListPlayers extends Component {
             <div className="rTableHead"><span>PVE totalActivityDurationSeconds</span></div>
             <div className="rTableHead"><span>PVE efficiency</span></div>
             <div className="rTableHead"><span>PVP totalActivityDurationSeconds</span></div>
-            <div className="rTableHead"><span>PVP efficiency</span></div>
+            <div className="rTableHead"><span>PVP killsDeathsRatio</span></div>
             
           </div>
 
@@ -139,13 +122,13 @@ class GetListPlayers extends Component {
             <div className="rTableRow" key={index}>
               <div className="rTableCell">{item.get('displayName')}</div>
               <div className="rTableCell">
+                { getListOfMembers && 
                 <GetLastConnect membershipId={item.get('membershipId')} membershipType={item.get('membershipType')}/>
-          
+                }
               </div>
-              <div className="rTableCell">&nbsp;</div>
-              <div className="rTableCell">&nbsp;</div>
-              <div className="rTableCell">&nbsp;</div>
-              <div className="rTableCell">&nbsp;</div>
+              { getListOfMembers && 
+                <GetPlayerInfo membershipId={item.get('membershipId')} membershipType={item.get('membershipType')} />
+              }
             </div>  
          
               
